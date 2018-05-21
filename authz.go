@@ -27,8 +27,11 @@ import (
 
 // Authorizer returns a Casbin authorizer Handler.
 func Authorizer(e *casbin.Enforcer) macaron.Handler {
-	return func(res http.ResponseWriter, req *http.Request, c *macaron.Context) {
-		user, _, _ := req.BasicAuth()
+	return func(res http.ResponseWriter, req *http.Request, c *macaron.Context, sess session.Store) {
+		user := sess.Get("admin")
+		if user == nil {
+			user = "anonymous"
+		}
 		method := req.Method
 		path := req.URL.Path
 		if !e.Enforce(user, path, method) {
@@ -37,6 +40,7 @@ func Authorizer(e *casbin.Enforcer) macaron.Handler {
 		}
 	}
 }
+
 
 func accessDenied(res http.ResponseWriter) {
 	http.Error(res, "Access Denied", http.StatusForbidden)
