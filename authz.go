@@ -43,5 +43,5 @@ func Authorizer(e *casbin.Enforcer) macaron.Handler {
 
 
 func accessDenied(res http.ResponseWriter) {
-	http.Error(res, "Access Denied", http.StatusForbidden)
+	http.Error(res, "系统中新增了权限管理，登录后请联系系统管理员审批", http.StatusForbidden)
 }
