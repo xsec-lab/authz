@@ -9,6 +9,7 @@ import (
 
 	"github.com/casbin/casbin"
 	"gopkg.in/macaron.v1"
+	"github.com/go-macaron/session"
 )
 
 // Authz is a middleware that controls the access to the HTTP service, it is based
